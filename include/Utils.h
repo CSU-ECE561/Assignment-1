@@ -3,11 +3,14 @@
 
 class Utils {
 private:
+    int mProjectID;
 
 public:
-    Utils();
+    Utils(int);
     ~Utils();
 
+    template <typename T> int generateInputData(T * data);
 };
 
+#include "Utils.hpp"
 #endif

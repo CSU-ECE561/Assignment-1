@@ -1,11 +1,7 @@
 #include "Utils.h"
 
-Utils::Utils() {
+Utils::Utils(int projectID): mProjectID(projectID)  {}
 
-}
-
-Utils::~Utils() {
-    
-}
+Utils::~Utils() {}
 
 
