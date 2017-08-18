@@ -1,0 +1,42 @@
+set(CMAKE_CXX_STANDARD 11)
+
+SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../common/cmake")
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../common/include)
+
+# Search SystemC path
+FIND_PACKAGE(SYSTEMC)
+
+# Link necessary libraries to path
+if(SYSTEMC_FOUND)
+    INCLUDE_DIRECTORIES(${SYSTEMC_INCLUDE_DIRS})
+    LINK_DIRECTORIES(${SYSTEMC_LIBRARIES_DIRS})
+    LINK_DIRECTORIES(${SYSTEMC_LIBRARIES})
+else()
+    MESSAGE( FATAL_ERROR "SystemC library not found.")
+    MESSAGE(" Run: export SYSTEMC=<sysc path> or install SystemC globally" )
+endif()
+
+
+EXECUTE_PROCESS( COMMAND uname -s COMMAND tr -d '\n' OUTPUT_VARIABLE TARGET_OS )
+EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE TARGET_ARCH )
+
+if (${TARGET_OS} STREQUAL "Linux")
+    if (${TARGET_ARCH} STREQUAL "x86_64")
+        SET(LOCAL_LIB_DIR "linux-x86_64")
+    elseif(${TARGET_ARCH} STREQUAL "x86")
+        SET(LOCAL_LIB_DIR "linux-x86")
+    else()
+        MESSAGE(FATAL_ERROR "Architecture of the OS is not supported")
+    endif ()
+elseif(${TARGET_OS} STREQUAL "Darwin")
+    MESSAGE("Apple OS not yet compiled for.")
+endif ()
+
+
+LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/lib/${LOCAL_LIB_DIR})
+
+SET(LIBRARY_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../common/lib/${LOCAL_LIB_DIR}")
+SET(LIBRARY_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/${LOCAL_LIB_DIR}")
