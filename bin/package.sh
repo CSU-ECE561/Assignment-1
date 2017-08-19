@@ -34,7 +34,7 @@ create_out_dir(){
 
 copy_to_out(){
     echo "Copying files to ${outdir}"
-    compress_files=$(find -maxdepth 1 -type d| grep "old_tars\|docs" -v)
+    compress_files=$(find -maxdepth 1 -type d| grep "old_tars\|docs\|${outdir}" -v)
     for lfile in ${compress_files} ;do
         echo "Copying ${lfile}"
         cp ${lfile} ${outdir} -r
