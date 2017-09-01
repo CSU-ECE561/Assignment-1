@@ -23,6 +23,9 @@ SET(SOURCE_FILES
 
 ##################################################################
 
-# Create library
-ADD_LIBRARY(assignment SHARED ${SOURCE_FILES})
+SET(EXECUTABLE_NAME "executable_name") # change the executable name
+
+# Create executable
+ADD_EXECUTABLE(EXECUTABLE_NAME ${SOURCE_FILES})
+TARGET_LINK_LIBRARIES(EXECUTABLE_NAME systemc)
 
