@@ -20,7 +20,7 @@ INCLUDE(common)
 
 # Set the source Files
 SET(SOURCE_FILES 
-		src/sc_fifo.cpp )
+		src/simple_fifo.cpp )
 
 ##################################################################
 
